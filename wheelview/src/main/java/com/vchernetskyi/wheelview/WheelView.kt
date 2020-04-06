@@ -24,7 +24,7 @@ class WheelView @JvmOverloads constructor(
     private var selectedPosition: Int = -1
     private var onItemSelectedListener: OnWheelViewItemSelectListener? = null
     private var selectedView: TextView? = null
-    private val containerHeight =
+    private var containerHeight =
         context.resources.getDimensionPixelOffset(R.dimen.wheel_view_container_height)
     private val itemHeight =
         context.resources.getDimensionPixelOffset(R.dimen.wheel_view_item_height)
@@ -32,6 +32,11 @@ class WheelView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.wheel_view, this)
         attrs?.let {
+            context.obtainStyledAttributes(attrs, intArrayOf(android.R.attr.layout_height)).run {
+                containerHeight = getDimensionPixelSize(0, containerHeight)
+                recycle()
+            }
+
             context.obtainStyledAttributes(it, R.styleable.WheelView).apply {
                 itemTextColor = getColor(R.styleable.WheelView_item_text_color, itemTextColor)
                 selectedItemTextColor =
