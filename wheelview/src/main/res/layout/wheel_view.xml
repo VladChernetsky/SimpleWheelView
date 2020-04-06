@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/WheelView.PickerContainer">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvWheelView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/wheel_view_center_line_height"
+        android:paddingEnd="@dimen/wheel_view_center_line_height"
+        tools:itemCount="20"
+        tools:listitem="@layout/wheel_view_item" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="@dimen/wheel_view_center_line_height"
+        android:background="@color/wheel_view_divider" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="@dimen/wheel_view_center_line_height"
+        android:background="@color/wheel_view_divider" />
+
+</FrameLayout>

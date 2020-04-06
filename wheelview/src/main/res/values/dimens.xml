@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--WHEEL VIEW-->
+    <dimen name="wheel_view_container_height">350dp</dimen>
+    <dimen name="wheel_view_text_size">22sp</dimen>
+    <dimen name="wheel_view_center_line_height">24dp</dimen>
+    <dimen name="wheel_item_vertical_margin">12dp</dimen>
+    <dimen name="wheel_view_item_height">24dp</dimen>
+</resources>

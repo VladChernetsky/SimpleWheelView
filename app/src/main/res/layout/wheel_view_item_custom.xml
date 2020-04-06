@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tvWheelItem"
+    style="@style/WheelView.Item"
+    android:textColor="@android:color/holo_red_dark"
+    tools:text="Test wheel item" />
