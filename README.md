@@ -1,7 +1,7 @@
 # SimpleWheelView
 A custom view using to select an item by rotating the wheel
 
-### Version 0.5.1-RC1
+### Version: 0.5.1-RC1
 ### Installation
 1. Add the JitPack repository to your build file
 ```
@@ -15,7 +15,7 @@ allprojects {
 2. Add the dependency
 ```
 dependencies {
-  implementation 'com.github.VladChernetsky:SimpleWheelView:Tag'
+  implementation 'com.github.VladChernetsky:SimpleWheelView:{version}'
 }
 
 ```
