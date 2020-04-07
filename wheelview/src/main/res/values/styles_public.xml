@@ -1,8 +1,6 @@
 <resources>
 
     <!--region WheelView-->
-    <style name="WheelView.PickerContainer" parent="WheelView.Private.PickerContainer" />
-
     <style name="WheelView.Item" parent="WheelView.Private.Item" />
     <!--endregion-->
 

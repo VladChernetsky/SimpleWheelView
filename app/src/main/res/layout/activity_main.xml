@@ -6,7 +6,8 @@
 
     <com.vchernetskyi.wheelview.WheelView
         android:id="@+id/wheelViewPicker"
-        style="@style/WheelView.PickerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/wheel_view_container_height"
         android:layout_gravity="center"
         app:item_text_color="@color/colorPrimary"
         app:selected_item_text_color="@color/colorAccent" />

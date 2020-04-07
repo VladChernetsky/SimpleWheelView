@@ -33,8 +33,7 @@ class MainActivity : AppCompatActivity() {
         wheelViewPicker.setAnimator(DefaultAnimator())
         wheelViewPicker.selectItemById(MOCK_SELECTED_ITEM_ID)
 
-        wheelViewPicker.setOnWheelItemSelectListener(object :
-            WheelView.OnWheelViewItemSelectListener {
+        wheelViewPicker.setOnWheelItemSelectListener(object : WheelView.OnWheelViewItemSelectListener {
             override fun onItemSelected(item: WheelItem) {
                 Toast.makeText(applicationContext, item.toString(), Toast.LENGTH_SHORT).show()
             }
