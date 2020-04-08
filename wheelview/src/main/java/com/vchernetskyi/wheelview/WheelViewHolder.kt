@@ -15,6 +15,7 @@ class WheelViewHolder(
     fun bind(model: WheelItem) {
         tvWheelItem.text = model.title
         tvWheelItem.setTextColor(viewItemConfig.itemTextColor)
+        tvWheelItem.textSize = itemView.context.pxToSp(viewItemConfig.itemTextSize)
         itemView.setOnClickListener {
             actionClick.invoke(model)
         }

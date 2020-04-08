@@ -15,6 +15,7 @@
         tools:listitem="@layout/wheel_view_item" />
 
     <View
+        android:id="@+id/viewDividerTop"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_gravity="center_vertical"
@@ -22,6 +23,7 @@
         android:background="@color/wheel_view_divider" />
 
     <View
+        android:id="@+id/viewDividerBottom"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_gravity="center_vertical"

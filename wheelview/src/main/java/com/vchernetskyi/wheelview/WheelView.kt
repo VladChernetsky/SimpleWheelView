@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.vchernetskyi.wheelview.animators.DefaultAnimator
 import com.vchernetskyi.wheelview.animators.WheelItemAnimator
@@ -28,6 +29,9 @@ class WheelView @JvmOverloads constructor(
         context.resources.getDimensionPixelOffset(R.dimen.wheel_view_container_height)
     private val itemHeight =
         context.resources.getDimensionPixelOffset(R.dimen.wheel_view_item_height)
+    private var itemTextSize: Int =
+        context.resources.getDimensionPixelOffset(R.dimen.wheel_view_text_size)
+    private var dividerColor: Int = ContextCompat.getColor(context, R.color.wheel_view_divider)
 
     init {
         View.inflate(context, R.layout.wheel_view, this)
@@ -41,10 +45,25 @@ class WheelView @JvmOverloads constructor(
                 itemTextColor = getColor(R.styleable.WheelView_item_text_color, itemTextColor)
                 selectedItemTextColor =
                     getColor(R.styleable.WheelView_selected_item_text_color, selectedItemTextColor)
+
+                itemTextSize =
+                    getDimensionPixelOffset(R.styleable.WheelView_item_text_size, itemTextSize)
+                dividerColor = getColor(R.styleable.WheelView_divider_color, dividerColor)
+
                 recycle()
             }
         }
-        wheelViewAdapter = WheelViewAdapter(::actionItemClick, ViewItemConfig(itemTextColor))
+
+        viewDividerTop.setBackgroundColor(dividerColor)
+        viewDividerBottom.setBackgroundColor(dividerColor)
+
+        wheelViewAdapter = WheelViewAdapter(
+            ::actionItemClick, ViewItemConfig(
+                itemTextColor,
+                itemTextSize
+            )
+        )
+
 
         setupRecyclerView()
     }
