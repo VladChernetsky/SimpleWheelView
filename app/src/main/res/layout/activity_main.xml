@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.vchernetskyi.wheelview.WheelView
         android:id="@+id/wheelViewPicker"
@@ -10,5 +11,7 @@
         android:layout_height="@dimen/wheel_view_container_height"
         android:layout_gravity="center"
         app:item_text_color="@color/colorPrimary"
-        app:selected_item_text_color="@color/colorAccent" />
-</FrameLayout>
+        app:item_text_size="@dimen/fab_margin"
+        app:selected_item_text_color="@color/colorAccent"
+        app:divider_color="@color/colorAccent"/>
+</LinearLayout>
