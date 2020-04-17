@@ -8,10 +8,8 @@
 
     <style name="WheelView.Private.Item">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">@dimen/wheel_view_item_height</item>
         <item name="android:gravity">center</item>
-        <item name="android:paddingTop">@dimen/wheel_item_vertical_margin</item>
-        <item name="android:paddingBottom">@dimen/wheel_item_vertical_margin</item>
         <item name="android:textSize">@dimen/wheel_view_text_size</item>
     </style>
     <!--endregion-->

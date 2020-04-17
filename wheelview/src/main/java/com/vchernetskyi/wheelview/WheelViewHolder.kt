@@ -19,8 +19,10 @@ class WheelViewHolder(
         tvWheelItem.text = model.title
         tvWheelItem.setTextColor(viewItemConfig.itemTextColor)
         tvWheelItem.textSize = itemView.context.pxToSp(viewItemConfig.itemTextSize)
-        if (viewItemConfig.itemVerticalPadding != -1) {
-            tvWheelItem.setPadding(viewItemConfig.itemVerticalPadding)
+        if (viewItemConfig.itemHeight != -1) {
+            itemView.updateLayoutParams {
+                height = viewItemConfig.itemHeight
+            }
         }
 
         itemView.setOnClickListener {
