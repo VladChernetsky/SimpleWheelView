@@ -27,11 +27,14 @@ class WheelView @JvmOverloads constructor(
     private var selectedView: TextView? = null
     private var containerHeight =
         context.resources.getDimensionPixelOffset(R.dimen.wheel_view_container_height)
-    private val itemHeight =
+    private var itemHeight =
         context.resources.getDimensionPixelOffset(R.dimen.wheel_view_item_height)
     private var itemTextSize: Int =
         context.resources.getDimensionPixelOffset(R.dimen.wheel_view_text_size)
     private var dividerColor: Int = ContextCompat.getColor(context, R.color.wheel_view_divider)
+
+    private var itemVerticalPadding: Int =
+        context.resources.getDimensionPixelOffset(R.dimen.wheel_item_vertical_margin)
 
     init {
         View.inflate(context, R.layout.wheel_view, this)
@@ -50,6 +53,11 @@ class WheelView @JvmOverloads constructor(
                     getDimensionPixelOffset(R.styleable.WheelView_item_text_size, itemTextSize)
                 dividerColor = getColor(R.styleable.WheelView_divider_color, dividerColor)
 
+                itemVerticalPadding = getDimensionPixelOffset(
+                    R.styleable.WheelView_item_vertical_padding,
+                    itemVerticalPadding
+                )
+
                 recycle()
             }
         }
@@ -60,7 +68,8 @@ class WheelView @JvmOverloads constructor(
         wheelViewAdapter = WheelViewAdapter(
             ::actionItemClick, ViewItemConfig(
                 itemTextColor,
-                itemTextSize
+                itemTextSize,
+                itemVerticalPadding
             )
         )
 

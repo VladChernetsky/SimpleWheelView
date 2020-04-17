@@ -1,6 +1,9 @@
 package com.vchernetskyi.wheelview
 
 import android.view.View
+import androidx.core.view.setPadding
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.wheel_view_item.view.*
 
@@ -16,6 +19,10 @@ class WheelViewHolder(
         tvWheelItem.text = model.title
         tvWheelItem.setTextColor(viewItemConfig.itemTextColor)
         tvWheelItem.textSize = itemView.context.pxToSp(viewItemConfig.itemTextSize)
+        if (viewItemConfig.itemVerticalPadding != -1) {
+            tvWheelItem.setPadding(viewItemConfig.itemVerticalPadding)
+        }
+
         itemView.setOnClickListener {
             actionClick.invoke(model)
         }
