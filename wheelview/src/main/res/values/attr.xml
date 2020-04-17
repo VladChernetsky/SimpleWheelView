@@ -5,6 +5,6 @@
         <attr name="selected_item_text_color" format="color" />
         <attr name="item_text_size" format="dimension" />
         <attr name="divider_color" format="color" />
-        <attr name="item_vertical_padding" format="dimension" />
+        <attr name="item_height" format="dimension" />
     </declare-styleable>
 </resources>

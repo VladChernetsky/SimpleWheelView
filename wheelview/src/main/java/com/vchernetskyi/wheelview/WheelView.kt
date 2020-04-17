@@ -8,7 +8,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearSnapHelper
-import com.vchernetskyi.wheelview.animators.DefaultAnimator
+import com.vchernetskyi.wheelview.animators.AlphaAnimator
 import com.vchernetskyi.wheelview.animators.WheelItemAnimator
 import kotlinx.android.synthetic.main.wheel_view.view.*
 
@@ -16,7 +16,7 @@ class WheelView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private val defaultAnimator = DefaultAnimator()
+    private val defaultAnimator = AlphaAnimator()
     private val wheelViewAdapter: WheelViewAdapter
     private val scrollListener = WheelViewScrollListener()
 
@@ -32,9 +32,6 @@ class WheelView @JvmOverloads constructor(
     private var itemTextSize: Int =
         context.resources.getDimensionPixelOffset(R.dimen.wheel_view_text_size)
     private var dividerColor: Int = ContextCompat.getColor(context, R.color.wheel_view_divider)
-
-    private var itemVerticalPadding: Int =
-        context.resources.getDimensionPixelOffset(R.dimen.wheel_item_vertical_margin)
 
     init {
         View.inflate(context, R.layout.wheel_view, this)
@@ -53,9 +50,9 @@ class WheelView @JvmOverloads constructor(
                     getDimensionPixelOffset(R.styleable.WheelView_item_text_size, itemTextSize)
                 dividerColor = getColor(R.styleable.WheelView_divider_color, dividerColor)
 
-                itemVerticalPadding = getDimensionPixelOffset(
-                    R.styleable.WheelView_item_vertical_padding,
-                    itemVerticalPadding
+                itemHeight = getDimensionPixelOffset(
+                    R.styleable.WheelView_item_height,
+                    itemHeight
                 )
 
                 recycle()
@@ -69,7 +66,7 @@ class WheelView @JvmOverloads constructor(
             ::actionItemClick, ViewItemConfig(
                 itemTextColor,
                 itemTextSize,
-                itemVerticalPadding
+                itemHeight
             )
         )
 
@@ -81,7 +78,7 @@ class WheelView @JvmOverloads constructor(
         scrollListener.callback = getScrollListenerCallback()
 
         rvWheelView.run {
-            val padding: Int = (containerHeight / 2) - itemHeight
+            val padding: Int = (containerHeight / 2) + ((containerHeight / 100) * 10)
             setPadding(0, padding, 0, padding)
 
             layoutManager = WheelViewLayoutManager(context)
