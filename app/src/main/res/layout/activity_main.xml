@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/wheel_view_container_height"
         android:layout_gravity="center"
+        app:divider_color="@color/colorAccent"
         app:item_text_color="@color/colorPrimary"
         app:item_text_size="@dimen/fab_margin"
-        app:selected_item_text_color="@color/colorAccent"
-        app:divider_color="@color/colorAccent"/>
+        app:selected_item_text_color="@color/colorAccent" />
 </LinearLayout>
