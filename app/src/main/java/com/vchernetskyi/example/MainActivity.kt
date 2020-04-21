@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.vchernetskyi.wheelview.WheelItem
 import com.vchernetskyi.wheelview.WheelView
-import com.vchernetskyi.wheelview.animators.DefaultAnimator
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -30,17 +29,17 @@ class MainActivity : AppCompatActivity() {
             wheelViewPicker.submitItems(list)
         })
 
-        wheelViewPicker.selectItemById(MOCK_SELECTED_ITEM_ID)
-
         wheelViewPicker.setOnWheelItemSelectListener(object :
             WheelView.OnWheelViewItemSelectListener {
             override fun onItemSelected(item: WheelItem) {
                 Toast.makeText(applicationContext, item.toString(), Toast.LENGTH_SHORT).show()
             }
         })
+
+        wheelViewPicker.selectItemById(MOCK_SELECTED_ITEM_ID)
     }
 
     companion object {
-        private const val MOCK_SELECTED_ITEM_ID = 8
+        private const val MOCK_SELECTED_ITEM_ID = 1
     }
 }

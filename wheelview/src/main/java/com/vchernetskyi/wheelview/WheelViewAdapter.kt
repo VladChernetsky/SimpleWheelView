@@ -24,7 +24,10 @@ class WheelViewAdapter(
         return getItem(position).id.toLong()
     }
 
-    fun getItemByPosition(position: Int): WheelItem? = getItem(position)
+    fun getItemByPosition(position: Int): WheelItem? {
+        if (position >= itemCount || position < 0) return null
+        return getItem(position)
+    }
 
     fun getPositionById(wheelItemId: Int): Int {
         for (position in 0 until itemCount) {
