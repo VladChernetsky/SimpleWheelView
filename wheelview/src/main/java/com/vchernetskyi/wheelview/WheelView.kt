@@ -79,7 +79,7 @@ class WheelView @JvmOverloads constructor(
         scrollListener.callback = getScrollListenerCallback()
 
         rvWheelView.run {
-            val padding: Int = (containerHeight / 2) + ((containerHeight / 100) * 10)
+            val padding: Int = (containerHeight / 2)
             setPadding(0, padding, 0, padding)
 
             layoutManager = WheelViewLayoutManager(context)

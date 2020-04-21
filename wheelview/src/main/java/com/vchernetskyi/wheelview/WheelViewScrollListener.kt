@@ -21,11 +21,10 @@ class WheelViewScrollListener : RecyclerView.OnScrollListener() {
             for (i in 0 until recyclerView.childCount) {
                 val child = recyclerView.getChildAt(i)
                 val lm = recyclerView.layoutManager as LinearLayoutManager
-                val childCenterX =
-                    lm.getDecoratedTop(child) + (lm.getDecoratedBottom(child) - lm.getDecoratedTop(
-                        child
-                    )) / 2
+                val childCenterX = lm.getDecoratedTop(child) +
+                        (lm.getDecoratedBottom(child) - lm.getDecoratedTop(child)) / 2
                 val childDistanceFromCenter = abs(childCenterX - recyclerViewCenterY)
+
                 if (childDistanceFromCenter < minDistance) {
                     minDistance = childDistanceFromCenter
                     position = recyclerView.getChildLayoutPosition(child)
