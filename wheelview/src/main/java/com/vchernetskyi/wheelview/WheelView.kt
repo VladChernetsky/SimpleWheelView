@@ -137,8 +137,8 @@ class WheelView @JvmOverloads constructor(
                     rvWheelView.smoothScrollToPosition(position)
                 } else {
                     rvWheelView.scrollBy(0, calculateVerticalScroll(position))
-                    highlightChosenView(wheelItemId)
                 }
+                highlightChosenView(wheelItemId)
                 notifyItemChanged(position)
             }
         }
