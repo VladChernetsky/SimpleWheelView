@@ -28,5 +28,7 @@ class WheelViewHolder(
         itemView.setOnClickListener {
             actionClick.invoke(model)
         }
+
+        itemView.tag = model.id
     }
 }

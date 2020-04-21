@@ -41,6 +41,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val MOCK_SELECTED_ITEM_ID = 5
+        private const val MOCK_SELECTED_ITEM_ID = 8
     }
 }
