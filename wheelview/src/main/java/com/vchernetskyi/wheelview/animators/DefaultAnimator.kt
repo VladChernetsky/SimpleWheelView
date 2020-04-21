@@ -4,7 +4,7 @@ import com.vchernetskyi.wheelview.WheelViewLayoutManager
 import kotlin.math.abs
 import kotlin.math.sqrt
 
-class DefaultAnimator : WheelItemAnimator() {
+class DefaultAnimator(private val scaleFactor: Float = 0.66F) : WheelItemAnimator() {
 
     override fun animateItems(layoutManager: WheelViewLayoutManager) {
         val height = layoutManager.height
@@ -21,7 +21,7 @@ class DefaultAnimator : WheelItemAnimator() {
 
                 // The scaling formula
                 val scale =
-                    1 - sqrt((distanceFromCenter / height).toDouble()).toFloat() * 0.66f
+                    1 - sqrt((distanceFromCenter / height).toDouble()).toFloat() * scaleFactor
                 val alpha: Float = if (scale < .8) {
                     val calcAlpha = scale - 0.2
                     calcAlpha.toFloat()

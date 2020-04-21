@@ -15,9 +15,16 @@ class WheelViewHolder(
 
     private val tvWheelItem = itemView.tvWheelItem
 
-    fun bind(model: WheelItem) {
-        tvWheelItem.text = model.title
-        tvWheelItem.setTextColor(viewItemConfig.itemTextColor)
+    fun bind(model: WheelItemWrapper) {
+        tvWheelItem.text = model.item.title
+
+        val textColor = if (model.isSelected) {
+            viewItemConfig.selectedTextColor
+        } else {
+            viewItemConfig.itemTextColor
+        }
+        tvWheelItem.setTextColor(textColor)
+
         tvWheelItem.textSize = itemView.context.pxToSp(viewItemConfig.itemTextSize)
         if (viewItemConfig.itemHeight != -1) {
             itemView.updateLayoutParams {
@@ -26,9 +33,9 @@ class WheelViewHolder(
         }
 
         itemView.setOnClickListener {
-            actionClick.invoke(model)
+            actionClick.invoke(model.item)
         }
 
-        itemView.tag = model.id
+        itemView.tag = model.item.id
     }
 }

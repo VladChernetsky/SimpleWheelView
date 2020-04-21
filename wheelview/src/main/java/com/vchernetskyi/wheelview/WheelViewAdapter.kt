@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 class WheelViewAdapter(
     private val actionClick: (WheelItem) -> Unit,
     private val viewItemConfig: ViewItemConfig
-) : ListAdapter<WheelItem, WheelViewHolder>(WheelItemDiffItemUtil()) {
+) : ListAdapter<WheelItemWrapper, WheelViewHolder>(WheelItemDiffItemUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WheelViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -21,31 +21,35 @@ class WheelViewAdapter(
     }
 
     override fun getItemId(position: Int): Long {
-        return getItem(position).id.toLong()
+        return getItem(position).item.id.toLong()
     }
 
     fun getItemByPosition(position: Int): WheelItem? {
         if (position >= itemCount || position < 0) return null
-        return getItem(position)
+        return getItem(position).item
     }
 
     fun getPositionById(wheelItemId: Int): Int {
         for (position in 0 until itemCount) {
-            if (getItem(position).id == wheelItemId) {
+            if (getItem(position).item.id == wheelItemId) {
                 return position
             }
         }
-        return -1
+        return BROKEN_POSITION
+    }
+
+    companion object{
+        const val BROKEN_POSITION = -1
     }
 }
 
-class WheelItemDiffItemUtil : DiffUtil.ItemCallback<WheelItem>() {
+class WheelItemDiffItemUtil : DiffUtil.ItemCallback<WheelItemWrapper>() {
 
-    override fun areItemsTheSame(oldItem: WheelItem, newItem: WheelItem): Boolean {
-        return oldItem.id == newItem.id
+    override fun areItemsTheSame(oldItem: WheelItemWrapper, newItem: WheelItemWrapper): Boolean {
+        return oldItem.item.id == newItem.item.id
     }
 
-    override fun areContentsTheSame(oldItem: WheelItem, newItem: WheelItem): Boolean {
-        return oldItem.title == newItem.title
+    override fun areContentsTheSame(oldItem: WheelItemWrapper, newItem: WheelItemWrapper): Boolean {
+        return oldItem.item.title == newItem.item.title && oldItem.isSelected == newItem.isSelected
     }
 }
