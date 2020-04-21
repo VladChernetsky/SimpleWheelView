@@ -5,10 +5,12 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.children
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.vchernetskyi.wheelview.WheelViewAdapter.Companion.BROKEN_POSITION
 import com.vchernetskyi.wheelview.animators.AlphaAnimator
 import com.vchernetskyi.wheelview.animators.WheelItemAnimator
 import kotlinx.android.synthetic.main.wheel_view.view.*
@@ -16,6 +18,8 @@ import kotlinx.android.synthetic.main.wheel_view.view.*
 class WheelView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
+
+    private val wheelItems = mutableListOf<WheelItemWrapper>()
 
     private val defaultAnimator = AlphaAnimator()
     private val wheelViewAdapter: WheelViewAdapter
@@ -25,7 +29,6 @@ class WheelView @JvmOverloads constructor(
     private var itemTextColor: Int = Color.BLACK
     private var selectedPosition: Int = -1
     private var onItemSelectedListener: OnWheelViewItemSelectListener? = null
-    private var selectedView: TextView? = null
     private var containerHeight =
         context.resources.getDimensionPixelOffset(R.dimen.wheel_view_container_height)
     private var itemHeight =
@@ -66,11 +69,11 @@ class WheelView @JvmOverloads constructor(
         wheelViewAdapter = WheelViewAdapter(
             ::actionItemClick, ViewItemConfig(
                 itemTextColor,
+                selectedItemTextColor,
                 itemTextSize,
                 itemHeight
             )
         )
-
 
         setupRecyclerView()
     }
@@ -86,7 +89,7 @@ class WheelView @JvmOverloads constructor(
                 .apply { this.animator = defaultAnimator }
 
             addOnScrollListener(scrollListener)
-
+            itemAnimator = null
             adapter = wheelViewAdapter
 
             LinearSnapHelper().attachToRecyclerView(rvWheelView)
@@ -97,18 +100,10 @@ class WheelView @JvmOverloads constructor(
         return object : WheelViewScrollListener.OnItemSelectedListener {
             override fun onItemSelected(layoutPosition: Int, itemView: View) {
                 if (layoutPosition != selectedPosition) {
-                    selectedPosition = layoutPosition
-                    changeSelectedTextColor(itemView)
                     notifyItemChanged(layoutPosition)
                 }
             }
         }
-    }
-
-    private fun changeSelectedTextColor(itemView: View) {
-        selectedView?.setTextColor(itemTextColor)
-        selectedView = (itemView as TextView)
-        selectedView?.setTextColor(selectedItemTextColor)
     }
 
     private fun actionItemClick(model: WheelItem) {
@@ -120,9 +115,12 @@ class WheelView @JvmOverloads constructor(
     }
 
     fun submitItems(items: List<WheelItem>) {
-        wheelViewAdapter.submitList(items)
+        wheelItems.addAll(items.mapIndexed { index, item -> WheelItemWrapper(item, index == 0) })
+        wheelViewAdapter.submitList(wheelItems)
+        selectedPosition = 0
     }
 
+    @Suppress("unused")
     fun setAnimator(animator: WheelItemAnimator) {
         (rvWheelView.layoutManager as WheelViewLayoutManager).animator = animator
     }
@@ -130,35 +128,45 @@ class WheelView @JvmOverloads constructor(
     fun selectItemById(wheelItemId: Int, smooth: Boolean = false) {
         post {
             val foundPosition = wheelViewAdapter.getPositionById(wheelItemId)
-            val position = if (foundPosition == -1) 0 else foundPosition
-            if (position != -1) {
-                selectedPosition = position
-                if (smooth) {
-                    rvWheelView.smoothScrollToPosition(position)
-                } else {
-                    rvWheelView.scrollBy(0, calculateVerticalScroll(position))
-                }
-                highlightChosenView(wheelItemId)
-                notifyItemChanged(position)
+            val position = if (foundPosition == BROKEN_POSITION) 0 else foundPosition
+
+            if (smooth) {
+                rvWheelView.smoothSnapToPosition(position)
+            } else {
+                (rvWheelView.layoutManager as? LinearLayoutManager)
+                    ?.scrollToPositionWithOffset(position, itemHeight / -2)
             }
+
+            notifyItemChanged(position)
         }
     }
 
     private fun notifyItemChanged(position: Int) {
+        if (selectedPosition != -1) {
+            val wrapper = wheelItems[selectedPosition]
+            wheelItems[selectedPosition] = wrapper.copy(isSelected = false)
+        }
+
+        wheelItems[position] = wheelItems[position].copy(isSelected = true)
+        wheelViewAdapter.notifyItemChanged(selectedPosition)
+        wheelViewAdapter.notifyItemChanged(position)
+        selectedPosition = position
+
         wheelViewAdapter.getItemByPosition(position)?.let {
             onItemSelectedListener?.onItemSelected(it)
         }
     }
 
-    private fun highlightChosenView(wheelItemId: Int) {
-        val view = rvWheelView.children.firstOrNull { it.tag == wheelItemId }
-        view?.let { changeSelectedTextColor(it) }
-    }
-
-    private fun calculateVerticalScroll(position: Int): Int {
-        val y = position + 1
-        val padding: Int = itemHeight / 2
-        return y * itemHeight + padding
+    private fun RecyclerView.smoothSnapToPosition(
+        position: Int,
+        snapMode: Int = LinearSmoothScroller.SNAP_TO_START
+    ) {
+        val smoothScroller = object : LinearSmoothScroller(this.context) {
+            override fun getVerticalSnapPreference(): Int = snapMode
+            override fun getHorizontalSnapPreference(): Int = snapMode
+        }
+        smoothScroller.targetPosition = position
+        layoutManager?.startSmoothScroll(smoothScroller)
     }
 
     interface OnWheelViewItemSelectListener {
