@@ -1,7 +1,7 @@
 # SimpleWheelView
 A custom view using to select an item by rotating the wheel
 
-### Version: 0.5.3-RC1
+### Version: 0.6.0-RC2
 ### Installation
 1. Add the JitPack repository to your build file
 ```
