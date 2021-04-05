@@ -120,6 +120,11 @@ class WheelView @JvmOverloads constructor(
         selectedPosition = 0
     }
 
+    fun clearItems() {
+        wheelItems.clear()
+        wheelViewAdapter.submitList(listOf())
+    }
+
     @Suppress("unused")
     fun setAnimator(animator: WheelItemAnimator) {
         (rvWheelView.layoutManager as WheelViewLayoutManager).animator = animator
